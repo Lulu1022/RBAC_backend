@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lulu.mapper.FormMapper">
+    <update id="changeReviewStatus">
+        UPDATE form
+        SET review_status = #{review_status}
+        WHERE id = #{id}
+    </update>
+    <select id="findForms" resultType="com.lulu.model.entity.Form">
+        SELECT *
+        FROM form
+        <where>
+            <if test="review_status != null and review_status != '' ">
+                review_status = #{review_status}
+            </if>
+        </where>
+        ORDER BY id desc LIMIT #{start}, #{pageSize}
+    </select>
+
+    <select id="findByUserIdAndReviewStatus" resultType="com.lulu.model.entity.Form">
+        select *
+        from form
+        <where>
+            <if test="userId != null">
+                user_id = #{userId}
+            </if>
+            <if test="reviewStatus != null">
+                <if test="userId != null">
+                    and
+                </if>
+                review_status = #{reviewStatus}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertForm"
+            parameterType="com.lulu.model.entity.Form"
+    useGeneratedKeys="true"
+    keyProperty="id">
+        INSERT INTO form
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="activityName != null">activity_name,</if>
+            <if test="activityRegion != null">activity_region,</if>
+            <if test="activityDate != null">activity_date,</if>
+            <if test="activityType != null">activity_type,</if>
+            <if test="activityDescription != null">activity_description,</if>
+            <if test="reviewStatus != null">review_status,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedAt != null">updated_at,</if>
+            <if test="userId != null">user_id</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="activityName != null">#{activityName},</if>
+            <if test="activityRegion != null">#{activityRegion},</if>
+            <if test="activityDate != null">#{activityDate},</if>
+            <if test="activityType != null">#{activityType},</if>
+            <if test="activityDescription != null">#{activityDescription},</if>
+            <if test="reviewStatus != null">#{reviewStatus},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+            <if test="userId != null">#{userId}</if>
+        </trim>
+    </insert>
+    <select id="count" resultType="Long">
+        select count(*)
+        from form
+        <where>
+            <if test="reviewStatus != null">
+                review_status=#{reviewStatus}
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lulu.mapper.RolesMapper">
+
+    <select id="findRoleById"  resultType="com.lulu.model.entity.Roles">
+        SELECT * FROM roles WHERE role_id = #{id}
+    </select>
+
+    <insert id="assignPermissionToRole">
+        INSERT IGNORE INTO role_permissions (role_id, permission_id)
+        VALUES
+        <foreach collection="permissionsList" item="permission" separator=",">
+            (#{roleId}, #{permission})
+        </foreach>
+    </insert>
+
+    <delete id="removePermissionFromRole">
+        DELETE FROM role_permissions WHERE role_id = #{roleId}
+    </delete>
+
+</mapper>
+
+
