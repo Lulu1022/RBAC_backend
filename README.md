@@ -19,7 +19,7 @@
 - **Gmail 發信功能**：使用 Gmail 的 SMTP 服務，當使用者註冊後自動發送確認郵件。
 
 ### 前端技術：
-[🔗RBAC-frontend](https://github.com/Lulu1022/RBAC-frontend)
+[🔗RBAC-frontend](https://github.com/Lulu1022/RBAC_frontend)
 - 使用 Vue 3 開發前，支援動態權限控制。
 - 使用 Element Plus 模板。
 
