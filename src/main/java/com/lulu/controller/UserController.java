@@ -81,7 +81,7 @@ public class UserController {
     }
 
 
-    @RequestPermission(name="使用者清單", parentId="5", tag="權限")
+    @RequestPermission(name="使用者列表", parentId="5", tag="權限")
     @Operation(summary = "查詢使用者(分頁)", description = "分頁查詢使用者清單")
     @GetMapping("/users")
     public Result getUsers(@RequestParam(defaultValue = "1") Integer page,
@@ -100,10 +100,10 @@ public class UserController {
 
     @Operation(summary = "使用者擁有的權限路徑", description = "")
     @GetMapping("/users/{userId}/permissions/path")
+    @ResponseBody
     public Result getUserPermissionsPath(@PathVariable int userId) {
         List<String> permissionList = permissionService.findPermissionsPathByUserId(userId);
         return Result.success(permissionList);
     }
-
 
 }

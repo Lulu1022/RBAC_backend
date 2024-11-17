@@ -27,17 +27,17 @@ public class WebConfig implements WebMvcConfigurer {
                         "/swagger-ui.html",
                         "/error",
                         "/webjars/**");
-// TODO
 
-//        registry.addInterceptor(permissionInterceptor)
-//                .addPathPatterns("/**")
-//                .excludePathPatterns("/swagger-ui/**",
-//                        "/v3/api-docs",
-//                        "/swagger-resources/**",
-//                        "/swagger-ui.html",
-//                        "/error",
-//                        "/webjars/**");
-//
+        registry.addInterceptor(permissionInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/swagger-ui/**",
+                        "/login",
+                        "/v3/api-docs",
+                        "/swagger-resources/**",
+                        "/swagger-ui.html",
+                        "/error",
+                        "/webjars/**");
+
 
     }
 }

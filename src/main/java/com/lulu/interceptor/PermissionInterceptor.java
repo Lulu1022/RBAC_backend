@@ -19,7 +19,11 @@ public class PermissionInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         List<String> sessionPermission =(List<String>)request.getSession().getAttribute("permissionList");
-        log.info("在 PermissionInterceptor 取得後端 session 中存的 permission :{}",sessionPermission);
+        if (sessionPermission == null) {
+            log.warn("PermissionInterceptor: 未找到 session 中的 permissionList");
+            return false;
+        }
+        log.info("在 PermissionInterceptor 取得後端 session 中存的 permission :{}", sessionPermission);
 
         if(handler instanceof HandlerMethod) {
 
@@ -33,7 +37,7 @@ public class PermissionInterceptor implements HandlerInterceptor {
             String name = permission.name();
             log.info("所有被標註 annotation 的 API:{}",name);
             if (!sessionPermission.contains(name)) {
-                response.sendRedirect("/permission/nopermission");
+                //response.sendRedirect("/permission/nopermission");
                 log.info("您沒有權限呼叫該 API");
                 return false;
             }

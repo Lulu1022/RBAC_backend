@@ -29,7 +29,6 @@ public class LoginController {
     @PostMapping("/login")
     public Result login(@RequestBody User user, HttpServletRequest request, HttpServletResponse response) {
 
-
         // 返回使用者資料，不包含密碼
         UserLoginVo userLoginVo = userService.login(user);
 
@@ -53,14 +52,13 @@ public class LoginController {
             session.setAttribute("token", jwt);
             session.setAttribute("user", userLoginVo);
             log.info("session ID: " + session.getId());
-            session.setAttribute("user", userLoginVo);
             log.info("已保存用戶到 session 中: " + userLoginVo);
-            log.info("Session ID in LoginController: " + session.getId());
 
             // 返回包含 JWT 和 userid 的成功響應
             Map<String, Object> responseData = new HashMap<>();
             responseData.put("token", jwt);
             responseData.put("user", userLoginVo);
+
 
             // 返回使用者權限
             List<Permissions> permissionList = permissionService.findPermissionsByUserId(userLoginVo.getUserId());
@@ -70,6 +68,8 @@ public class LoginController {
                 permissionNameList.add(permission.getPermissionName());
                 permissionIdList.add(permission.getPermissionId());
             }
+            session.setAttribute("permissionList", permissionNameList);
+
             responseData.put("userPermissionId", permissionIdList);
             responseData.put("userPermissionName",permissionNameList);
             return Result.success(responseData);
